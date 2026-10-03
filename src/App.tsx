@@ -1,7 +1,17 @@
+import Body from "./Body";
+import { BrowserRouter, Routes, Route } from "react-router";
+import Signin from "./Signin";
+
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold">Hello world!</h1>
+    <div className="min-h-screen bg-base-200">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Body />}>
+            <Route path="/signin" element={<Signin />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
