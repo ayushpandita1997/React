@@ -1,17 +1,23 @@
 import Body from "./Body";
 import { BrowserRouter, Routes, Route } from "react-router";
-import Signin from "./Signin";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Signup from "./Signup";
+import Login from "./Login";
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <div className="min-h-screen bg-base-200">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Body />}>
-            <Route path="/signin" element={<Signin />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Body />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
     </div>
   );
 }
