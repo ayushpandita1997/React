@@ -1,21 +1,28 @@
-const BASE_URL = "http://localhost:3000";
+import { API_BASE_URL } from "../utils/constants";
+
+export class ApiError extends Error {
+  readonly status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+  }
+}
 
 const loginApi = async (email: string, password: string) => {
-  try {
-    const data = await fetch(`${BASE_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    if (!data.ok) {
-      throw new Error("Failed to sign in");
-    }
-    return data.json();
-  } catch (error) {
-    return error instanceof Error ? error.message : String(error);
+  const response = await fetch(`${API_BASE_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ email, password }),
+  });
+  if (!response.ok) {
+    throw new ApiError("Failed to sign in", response.status);
   }
+  return response.json();
 };
 
 const signUpApi = async (
@@ -26,7 +33,7 @@ const signUpApi = async (
   age: string,
 ) => {
   try {
-    const data = await fetch(`${BASE_URL}/signup`, {
+    const data = await fetch(`${API_BASE_URL}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,4 +55,31 @@ const signUpApi = async (
   }
 };
 
-export { loginApi, signUpApi };
+const profileApi = async () => {
+  const response = await fetch(`${API_BASE_URL}/profile/view`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new ApiError("Failed to fetch profile", response.status);
+  }
+  return response.json();
+};
+
+const logoutApi = async () => {
+  const response = await fetch(`${API_BASE_URL}/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new ApiError("Failed to logout", response.status);
+  }
+};
+
+export { loginApi, profileApi, signUpApi, logoutApi };

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signUpApi } from "./api/client";
+import { signUpApi } from "../api/client";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -62,12 +62,10 @@ const Signup = () => {
             onChange={(e) => setAge(e.target.value)}
             value={age}
           />
-        </fieldset>
-        <div className="card-actions justify-end">
           <button onClick={signUpHandler} className="btn btn-primary">
             SignUp
           </button>
-        </div>
+        </fieldset>
       </div>
     </div>
   );

@@ -1,24 +1,26 @@
-import Body from "./Body";
+import Body from "./components/Body";
 import { BrowserRouter, Routes, Route } from "react-router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Signup from "./Signup";
-import Login from "./Login";
-const queryClient = new QueryClient();
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import { store } from "./store/appStore";
+import { Provider } from "react-redux";
+import Profile from "./components/Profile";
+import Feed from "./components/Feed";
 
 function App() {
   return (
-    <div className="min-h-screen bg-base-200">
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Body />}>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </QueryClientProvider>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Body />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/feed" element={<Feed />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/signup" element={<Signup />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

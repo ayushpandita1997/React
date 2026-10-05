@@ -1,12 +1,28 @@
 import { useState } from "react";
-import { loginApi } from "./api/client";
+import { loginApi, profileApi } from "../api/client";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/userSlice";
+import { useNavigate } from "react-router";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("sheetal.bhat@gmail.com");
+  const [password, setPassword] = useState("$weetySheetal12");
+  const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const loginHandler = () => {
-    loginApi(email, password);
+  const loginHandler = async () => {
+    setErrorMessage("");
+    try {
+      await loginApi(email, password);
+      const user = await profileApi();
+      dispatch(addUser(user));
+      navigate("/feed", { replace: true });
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : "Unable to sign in.",
+      );
+    }
   };
 
   return (
@@ -29,6 +45,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
+          {errorMessage && <p role="alert">{errorMessage}</p>}
           <p className="label">
             Forgot Password? <a className="link link-primary">Click here</a>
           </p>
