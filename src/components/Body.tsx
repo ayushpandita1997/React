@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import { useEffect, useRef } from "react";
 import { addUser } from "../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { ApiError, profileApi } from "../api/client";
+import { profileApi } from "../api/client";
 
 const Body = () => {
   const dispatch = useDispatch();
@@ -21,8 +21,8 @@ const Body = () => {
         const data = await profileApi();
         dispatch(addUser(data));
       } catch (error) {
-        if (error instanceof ApiError) {
-          if (error.status === 401) {
+        if (error instanceof Error) {
+          if (error.message.includes("401")) {
             navigate("/login");
           }
           return;

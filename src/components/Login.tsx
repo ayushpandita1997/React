@@ -19,16 +19,15 @@ const Login = () => {
       dispatch(addUser(user));
       navigate("/feed", { replace: true });
     } catch (error) {
-      setErrorMessage(
-        error instanceof Error ? error.message : "Unable to sign in.",
-      );
+      setErrorMessage(error instanceof Error ? error.message : String(error));
     }
   };
 
   return (
-    <div className="flex min-h-full items-center justify-center">
+    <div className="flex min-h-full items-center justify-center mt-10">
       <div>
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <legend className="fieldset-legend">Login</legend>
           <legend className="fieldset-legend">Email</legend>
           <input
             type="email"
@@ -49,12 +48,10 @@ const Login = () => {
           <p className="label">
             Forgot Password? <a className="link link-primary">Click here</a>
           </p>
-        </fieldset>
-        <div className="card-actions justify-end">
-          <button onClick={loginHandler} className="btn btn-primary">
-            SignIn
+          <button onClick={loginHandler} className="btn btn-primary mt-4">
+            Login
           </button>
-        </div>
+        </fieldset>
       </div>
     </div>
   );

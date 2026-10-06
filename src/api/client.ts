@@ -1,14 +1,5 @@
 import { API_BASE_URL } from "../utils/constants";
-
-export class ApiError extends Error {
-  readonly status: number;
-
-  constructor(message: string, status: number) {
-    super(message);
-    this.name = "ApiError";
-    this.status = status;
-  }
-}
+import type { User } from "../store/userSlice";
 
 const loginApi = async (email: string, password: string) => {
   const response = await fetch(`${API_BASE_URL}/login`, {
@@ -20,7 +11,8 @@ const loginApi = async (email: string, password: string) => {
     body: JSON.stringify({ email, password }),
   });
   if (!response.ok) {
-    throw new ApiError("Failed to sign in", response.status);
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
   }
   return response.json();
 };
@@ -47,7 +39,8 @@ const signUpApi = async (
       }),
     });
     if (!data.ok) {
-      throw new Error("Failed to sign up");
+      const errorResponse = await data.json();
+      throw new Error(errorResponse.message || "Failed to sign up");
     }
     return data.json();
   } catch (error) {
@@ -64,7 +57,8 @@ const profileApi = async () => {
     credentials: "include",
   });
   if (!response.ok) {
-    throw new ApiError("Failed to fetch profile", response.status);
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || "Failed to fetch profile");
   }
   return response.json();
 };
@@ -78,8 +72,46 @@ const logoutApi = async () => {
     credentials: "include",
   });
   if (!response.ok) {
-    throw new ApiError("Failed to logout", response.status);
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
   }
 };
 
-export { loginApi, profileApi, signUpApi, logoutApi };
+const feedApi = async (): Promise<User[]> => {
+  const response = await fetch(`${API_BASE_URL}/user/feed`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
+  }
+  return response.json() as Promise<User[]>;
+};
+
+const updateProfileApi = async (profileData: User): Promise<void> => {
+  const response = await fetch(`${API_BASE_URL}/profile/edit`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(profileData),
+  });
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || "Failed to update profile");
+  }
+};
+
+export {
+  loginApi,
+  signUpApi,
+  profileApi,
+  logoutApi,
+  feedApi,
+  updateProfileApi,
+};

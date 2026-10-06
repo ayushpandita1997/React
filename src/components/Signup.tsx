@@ -13,7 +13,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex min-h-full items-center justify-center">
+    <div className="flex min-h-full items-center justify-center mt-10">
       <div>
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
           <legend className="fieldset-legend">Signup</legend>
@@ -62,7 +62,7 @@ const Signup = () => {
             onChange={(e) => setAge(e.target.value)}
             value={age}
           />
-          <button onClick={signUpHandler} className="btn btn-primary">
+          <button onClick={signUpHandler} className="btn btn-primary mt-4">
             SignUp
           </button>
         </fieldset>
