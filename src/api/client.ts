@@ -23,6 +23,10 @@ const signUpApi = async (
   email: string,
   password: string,
   age: string,
+  gender: string,
+  bio: string,
+  skills: string,
+  profilePic: string,
 ) => {
   try {
     const data = await fetch(`${API_BASE_URL}/signup`, {
@@ -36,6 +40,10 @@ const signUpApi = async (
         email,
         password,
         age,
+        gender,
+        bio,
+        skills,
+        profilePic,
       }),
     });
     if (!data.ok) {

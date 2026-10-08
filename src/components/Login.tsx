@@ -2,7 +2,7 @@ import { useState } from "react";
 import { loginApi, profileApi } from "../api/client";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/userSlice";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const Login = () => {
   const [email, setEmail] = useState("sheetal.bhat@gmail.com");
@@ -45,9 +45,12 @@ const Login = () => {
             value={password}
           />
           {errorMessage && <p role="alert">{errorMessage}</p>}
-          <p className="label">
-            Forgot Password? <a className="link link-primary">Click here</a>
-          </p>
+          <div className="label flex justify-between gap-4">
+            <a className="link link-primary no-underline">Forgot Password?</a>
+            <Link to="/signup" className="link link-primary no-underline">
+              Sign Up
+            </Link>
+          </div>
           <button onClick={loginHandler} className="btn btn-primary mt-4">
             Login
           </button>
