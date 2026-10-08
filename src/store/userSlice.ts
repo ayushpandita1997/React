@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { User } from "../utils/types";
+import type { ReceivedRequest, User } from "../utils/types";
 
 export const userSlice = createSlice({
   name: "user",
@@ -38,13 +38,25 @@ export const connectionSlice = createSlice({
   },
 });
 
+export const receivedRequestsSlice = createSlice({
+  name: "receivedRequests",
+  initialState: null as ReceivedRequest[] | null,
+  reducers: {
+    receivedRequests: (_state, action: PayloadAction<ReceivedRequest[]>) => {
+      return action.payload;
+    },
+  },
+});
+
 export const { addUser, removeUser } = userSlice.actions; //action creators
 export const { addUserFeed, removeUserFeed } = feedSlice.actions;
 export const { connections } = connectionSlice.actions;
+export const { receivedRequests } = receivedRequestsSlice.actions;
 
 export const userReducer = userSlice.reducer;
 export const feedReducer = feedSlice.reducer;
 export const connectionReducer = connectionSlice.reducer;
+export const receivedRequestsReducer = receivedRequestsSlice.reducer;
 
 // so the 'user' is a slice created inside the store and userReducer is the
 // reducer which manages the action logic like addUser, removeUser inside the slice

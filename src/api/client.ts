@@ -1,5 +1,9 @@
 import { API_BASE_URL } from "../utils/constants";
-import type { ConnectionsResponse, User } from "../utils/types";
+import type {
+  ConnectionsResponse,
+  ReceivedRequestsResponse,
+  User,
+} from "../utils/types";
 
 const loginApi = async (email: string, password: string) => {
   const response = await fetch(`${API_BASE_URL}/login`, {
@@ -130,6 +134,21 @@ const connectionsApi = async (): Promise<ConnectionsResponse> => {
   return response.json() as Promise<ConnectionsResponse>;
 };
 
+const receivedRequestsApi = async (): Promise<ReceivedRequestsResponse> => {
+  const response = await fetch(`${API_BASE_URL}/user/receivedRequests`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
+  }
+  return response.json() as Promise<ReceivedRequestsResponse>;
+};
+
 export {
   loginApi,
   signUpApi,
@@ -138,4 +157,5 @@ export {
   feedApi,
   updateProfileApi,
   connectionsApi,
+  receivedRequestsApi,
 };

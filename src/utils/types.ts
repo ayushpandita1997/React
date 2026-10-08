@@ -13,3 +13,14 @@ export type User = {
 export type ConnectionsResponse = {
   connectionData: User[];
 };
+
+export type ReceivedRequest = {
+  _id: string;
+  fromUserId: User;
+  toUserId: string;
+  status: string;
+};
+
+export type ReceivedRequestsResponse = {
+  data: ReceivedRequest[];
+};
