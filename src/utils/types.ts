@@ -24,3 +24,14 @@ export type ReceivedRequest = {
 export type ReceivedRequestsResponse = {
   data: ReceivedRequest[];
 };
+
+export type SentRequest = {
+  _id: string;
+  fromUserId: User;
+  toUserId: User;
+  status: string;
+};
+
+export type sentRequestsResponse = {
+  data: SentRequest[];
+};

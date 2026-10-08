@@ -186,6 +186,21 @@ const sendRequestsApi = async (
   }
 };
 
+const viewSendRequestsApi = async () => {
+  const response = await fetch(`${API_BASE_URL}/user/sentRequests`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
+  }
+  return response.json();
+};
+
 export {
   loginApi,
   signUpApi,
@@ -197,4 +212,5 @@ export {
   receivedRequestsApi,
   reviewRequestsApi,
   sendRequestsApi,
+  viewSendRequestsApi,
 };

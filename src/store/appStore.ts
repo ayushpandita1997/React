@@ -3,6 +3,7 @@ import {
   connectionReducer,
   feedReducer,
   receivedRequestsReducer,
+  sentRequestsReducer,
   userReducer,
 } from "./userSlice";
 
@@ -12,6 +13,7 @@ export const store = configureStore({
     feed: feedReducer,
     connections: connectionReducer,
     receivedRequests: receivedRequestsReducer,
+    sentRequest: sentRequestsReducer,
   },
 });
 

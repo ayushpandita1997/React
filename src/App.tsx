@@ -8,6 +8,7 @@ import Profile from "./components/Profile";
 import Feed from "./components/Feed";
 import Connections from "./components/Connections";
 import ReceivedRequests from "./components/ReceivedRequests";
+import SentRequests from "./components/SentRequests";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/connections" element={<Connections />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/received-requests" element={<ReceivedRequests />} />
+            <Route path="/sent-requests" element={<SentRequests />} />
           </Route>
         </Routes>
       </BrowserRouter>
