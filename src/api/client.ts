@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../utils/constants";
-import type { User } from "../store/userSlice";
+import type { ConnectionsResponse, User } from "../utils/types";
 
 const loginApi = async (email: string, password: string) => {
   const response = await fetch(`${API_BASE_URL}/login`, {
@@ -107,6 +107,21 @@ const updateProfileApi = async (profileData: User): Promise<void> => {
   }
 };
 
+const connectionsApi = async (): Promise<ConnectionsResponse> => {
+  const response = await fetch(`${API_BASE_URL}/user/connections`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
+  }
+  return response.json() as Promise<ConnectionsResponse>;
+};
+
 export {
   loginApi,
   signUpApi,
@@ -114,4 +129,5 @@ export {
   logoutApi,
   feedApi,
   updateProfileApi,
+  connectionsApi,
 };
