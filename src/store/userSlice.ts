@@ -22,8 +22,8 @@ export const feedSlice = createSlice({
     addUserFeed: (_state, action: PayloadAction<User[]>) => {
       return action.payload;
     },
-    removeUserFeed: () => {
-      return null;
+    removeUserFeed: (state, action: PayloadAction<string>) => {
+      return state?.filter((user) => user._id !== action.payload) ?? [];
     },
   },
 });

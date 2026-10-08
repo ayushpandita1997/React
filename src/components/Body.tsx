@@ -22,7 +22,7 @@ const Body = () => {
         dispatch(addUser(data));
       } catch (error) {
         if (error instanceof Error) {
-          if (error.message.includes("401")) {
+          if (error.message === "No token provided") {
             navigate("/login");
           }
           return;

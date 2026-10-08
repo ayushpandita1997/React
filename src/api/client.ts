@@ -170,19 +170,16 @@ const reviewRequestsApi = async (
 };
 
 const sendRequestsApi = async (
-  status: "accept" | "reject",
-  requestId: string,
+  status: "interested" | "ignore",
+  userId: string,
 ): Promise<void> => {
-  const response = await fetch(
-    `${API_BASE_URL}/review/${status}/${requestId}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
+  const response = await fetch(`${API_BASE_URL}/send/${status}/${userId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+    credentials: "include",
+  });
   if (!response.ok) {
     const errorMessage = await response.json();
     throw new Error(errorMessage.message || response.statusText);
