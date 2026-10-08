@@ -44,7 +44,11 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          {errorMessage && <p role="alert">{errorMessage}</p>}
+          {errorMessage && (
+            <p className="text-red-500" role="alert">
+              {errorMessage}
+            </p>
+          )}
           <div className="label flex justify-between gap-4">
             <a className="link link-primary no-underline">Forgot Password?</a>
             <Link to="/signup" className="link link-primary no-underline">

@@ -183,7 +183,11 @@ const Signup = () => {
           </div>
         </div>
 
-        {errorMessage && <p role="alert">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="text-red-500" role="alert">
+            {errorMessage}
+          </p>
+        )}
         <button onClick={signUpHandler} className="btn btn-primary mt-4 w-full">
           SignUp
         </button>

@@ -2,10 +2,7 @@ import { useEffect, useState } from "react";
 import { receivedRequestsApi, reviewRequestsApi } from "../api/client";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/appStore";
-import {
-  receivedRequests,
-  removeReceivedRequest,
-} from "../store/userSlice";
+import { receivedRequests, removeReceivedRequest } from "../store/userSlice";
 
 const ReceivedRequests = () => {
   const dispatch = useDispatch();
@@ -59,7 +56,7 @@ const ReceivedRequests = () => {
         Received Requests
       </p>
       {errorMessage && (
-        <p className="px-4 text-sm text-error" role="alert">
+        <p className="px-4 text-sm text-error text-red-500" role="alert">
           {errorMessage}
         </p>
       )}

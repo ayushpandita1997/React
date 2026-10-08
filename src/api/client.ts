@@ -169,6 +169,26 @@ const reviewRequestsApi = async (
   }
 };
 
+const sendRequestsApi = async (
+  status: "accept" | "reject",
+  requestId: string,
+): Promise<void> => {
+  const response = await fetch(
+    `${API_BASE_URL}/review/${status}/${requestId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    },
+  );
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
+  }
+};
+
 export {
   loginApi,
   signUpApi,
@@ -179,4 +199,5 @@ export {
   connectionsApi,
   receivedRequestsApi,
   reviewRequestsApi,
+  sendRequestsApi,
 };

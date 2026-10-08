@@ -192,7 +192,7 @@ const ProfileForm = ({ user }: { user: User }) => {
             </div>
           </div>
 
-          {error && <p className="mt-4 text-error">{error}</p>}
+          {error && <p className="mt-4 text-error text-red-500">{error}</p>}
 
           <button
             onClick={handleProfileUpdate}
