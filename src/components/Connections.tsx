@@ -23,10 +23,16 @@ const Connections = () => {
     connectionsData();
   }, [dispatch, userConnection]);
 
-  if (userConnection?.length === 0) return <h1> No Connections Found</h1>;
+  if (userConnection?.length === 0) {
+    return (
+      <main className="mx-auto w-full max-w-2xl p-4 sm:p-6">
+        <h1 className="text-center text-xl font-semibold">No Connections Found</h1>
+      </main>
+    );
+  }
 
   return (
-    <div>
+    <main className="mx-auto w-full max-w-2xl p-4 sm:p-6">
       <ul className="list bg-base-100 rounded-box shadow-md">
         <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
           Connections
@@ -55,7 +61,7 @@ const Connections = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </main>
   );
 };
 

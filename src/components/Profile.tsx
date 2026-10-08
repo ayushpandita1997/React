@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { updateProfileApi } from "../api/client";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/appStore";
-import { addUser, type User } from "../store/userSlice";
+import { addUser } from "../store/userSlice";
+import type { User } from "../utils/types";
 
 const Profile = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -84,10 +85,10 @@ const ProfileForm = ({ user }: { user: User }) => {
     try {
       await updateProfileApi({
         ...profileData,
-        id: user?.id,
+        _id: user?._id,
         email: user?.email,
       });
-      dispatch(addUser({ ...profileData, id: user?.id, email: user?.email }));
+      dispatch(addUser({ ...profileData, _id: user?._id, email: user?.email }));
       setShowSuccessToast(true);
     } catch (error) {
       const errorMessage =

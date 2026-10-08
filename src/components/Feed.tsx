@@ -25,9 +25,9 @@ const Feed = () => {
   }, [dispatch, userFeed]);
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-6 p-4 pb-24">
       {userFeed?.map((user) => (
-        <UserCard key={user.id} user={user} />
+        <UserCard key={user._id} user={user} />
       ))}
     </div>
   );

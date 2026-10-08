@@ -1,10 +1,10 @@
-import type { User } from "../store/userSlice";
+import type { User } from "../utils/types";
 
 const UserCard = ({ user }: { user: User }) => {
   const { firstName, lastName, age, gender, profilePic, skills, bio } = user;
   return (
     <div>
-      <div className="card bg-base-100 w-96 shadow-sm">
+      <div className="card bg-base-100 w-80 max-w-full shadow-sm">
         <figure>
           <img src={profilePic} alt="Shoes" />
         </figure>
