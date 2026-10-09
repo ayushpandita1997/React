@@ -65,9 +65,9 @@ export const sentRequestsSlice = createSlice({
     sentRequest: (_state, action: PayloadAction<SentRequest[]>) => {
       return action.payload;
     },
-    // removeSentRequest: (state, action: PayloadAction<string>) => {
-    //   return state?.filter((user) => user._id !== action.payload) ?? [];
-    // },
+    removeSentRequest: (state, action: PayloadAction<string>) => {
+      return state?.filter((request) => request._id !== action.payload) ?? [];
+    },
   },
 });
 
@@ -76,7 +76,7 @@ export const { addUserFeed, removeUserFeed } = feedSlice.actions;
 export const { connections, removeConnections } = connectionSlice.actions;
 export const { receivedRequests, removeReceivedRequest } =
   receivedRequestsSlice.actions;
-export const { sentRequest } = sentRequestsSlice.actions;
+export const { sentRequest, removeSentRequest } = sentRequestsSlice.actions;
 
 export const userReducer = userSlice.reducer;
 export const feedReducer = feedSlice.reducer;

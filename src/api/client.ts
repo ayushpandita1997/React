@@ -233,6 +233,23 @@ const removeConnectionApi = async (requestId: string): Promise<void> => {
   }
 };
 
+const removeSentRequestApi = async (requestId: string): Promise<void> => {
+  const response = await fetch(
+    `${API_BASE_URL}/cancelSendRequest/${requestId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    },
+  );
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
+  }
+};
+
 export {
   loginApi,
   signUpApi,
@@ -247,4 +264,5 @@ export {
   viewSendRequestsApi,
   updatePasswordApi,
   removeConnectionApi,
+  removeSentRequestApi,
 };

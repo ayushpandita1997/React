@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/appStore";
-import { viewSendRequestsApi } from "../api/client";
-import { sentRequest } from "../store/userSlice";
+import { removeSentRequestApi, viewSendRequestsApi } from "../api/client";
+import { removeSentRequest, sentRequest } from "../store/userSlice";
 
 const SentRequests = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,10 @@ const SentRequests = () => {
       </main>
     );
   }
-
+  const removeRequest = async (requestId: string) => {
+    await removeSentRequestApi(requestId);
+    dispatch(removeSentRequest(requestId));
+  };
   return (
     <main className="mx-auto w-full max-w-2xl p-4 sm:p-6">
       <p className="p-4 pb-3 text-xs opacity-60 tracking-wide">Sent Requests</p>
@@ -44,7 +47,7 @@ const SentRequests = () => {
               className="flex items-center justify-between rounded-box border border-white/5 bg-[#2a3442]/80 px-3 py-2.5 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)]"
               key={sentData._id ?? index}
             >
-              <div className="flex min-w-0 items-center gap-3">
+              <div className="flex min-w-0 flex-1 items-center gap-3">
                 <div className="shrink-0 overflow-hidden rounded-box bg-[#1d2430]">
                   <img
                     className="size-10 object-cover"
@@ -53,7 +56,7 @@ const SentRequests = () => {
                   />
                 </div>
 
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="text-lg font-semibold leading-tight text-white">
                     {sentData.firstName} {sentData.lastName}
                   </div>
@@ -64,6 +67,12 @@ const SentRequests = () => {
                     {sentData.bio || "No bio available"}
                   </p>
                 </div>
+                <button
+                  onClick={() => removeRequest(user._id)}
+                  className="ml-auto min-w-20 rounded-lg bg-rose-500/10 px-3 py-2 text-sm font-semibold text-rose-400 transition hover:bg-rose-500/15"
+                >
+                  Remove Request
+                </button>
               </div>
             </article>
           );
