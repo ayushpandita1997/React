@@ -87,8 +87,16 @@ const ProfileForm = ({ user }: { user: User }) => {
         ...profileData,
         _id: user?._id,
         email: user?.email,
+        connectionRequestId: user.connectionRequestId,
       });
-      dispatch(addUser({ ...profileData, _id: user?._id, email: user?.email }));
+      dispatch(
+        addUser({
+          ...profileData,
+          _id: user?._id,
+          email: user?.email,
+          connectionRequestId: user.connectionRequestId,
+        }),
+      );
       setShowSuccessToast(true);
     } catch (error) {
       const errorMessage =
