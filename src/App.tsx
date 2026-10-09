@@ -9,6 +9,7 @@ import Feed from "./components/Feed";
 import Connections from "./components/Connections";
 import ReceivedRequests from "./components/ReceivedRequests";
 import SentRequests from "./components/SentRequests";
+import Password from "./components/Password";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/password" element={<Password />} />
             <Route path="/connections" element={<Connections />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/received-requests" element={<ReceivedRequests />} />

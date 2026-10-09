@@ -46,11 +46,6 @@ const NavBar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link to="/profile" className="justify-between">
-                  Profile
-                </Link>
-              </li>
-              <li>
                 <Link to="/connections" className="justify-between">
                   My Connections
                 </Link>
@@ -64,6 +59,23 @@ const NavBar = () => {
                 <Link to="/sent-requests" className="justify-between">
                   Sent Requests
                 </Link>
+              </li>
+              <li>
+                <details>
+                  <summary>Settings</summary>
+                  <ul className="bg-base-100 rounded-t-none p-2">
+                    <li>
+                      <Link to="/profile" className="justify-between">
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/password" className="justify-between">
+                        Password
+                      </Link>
+                    </li>
+                  </ul>
+                </details>
               </li>
               <li>
                 <a onClick={logoutHandler}>Logout</a>

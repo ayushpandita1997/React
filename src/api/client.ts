@@ -201,6 +201,21 @@ const viewSendRequestsApi = async () => {
   return response.json();
 };
 
+const updatePasswordApi = async (password: string): Promise<void> => {
+  const response = await fetch(`${API_BASE_URL}/profile/password`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ password }),
+  });
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || "Failed to update password");
+  }
+};
+
 export {
   loginApi,
   signUpApi,
@@ -213,4 +228,5 @@ export {
   reviewRequestsApi,
   sendRequestsApi,
   viewSendRequestsApi,
+  updatePasswordApi,
 };
