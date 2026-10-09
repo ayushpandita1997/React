@@ -35,6 +35,13 @@ export const connectionSlice = createSlice({
     connections: (_state, action: PayloadAction<User[]>) => {
       return action.payload;
     },
+    removeConnections: (state, action: PayloadAction<string>) => {
+      return (
+        state?.filter(
+          (request) => request.connectionRequestId !== action.payload,
+        ) ?? []
+      );
+    },
   },
 });
 
@@ -66,7 +73,7 @@ export const sentRequestsSlice = createSlice({
 
 export const { addUser, removeUser } = userSlice.actions; //action creators
 export const { addUserFeed, removeUserFeed } = feedSlice.actions;
-export const { connections } = connectionSlice.actions;
+export const { connections, removeConnections } = connectionSlice.actions;
 export const { receivedRequests, removeReceivedRequest } =
   receivedRequestsSlice.actions;
 export const { sentRequest } = sentRequestsSlice.actions;

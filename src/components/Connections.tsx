@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { connectionsApi } from "../api/client";
-import { connections } from "../store/userSlice";
+import { connectionsApi, removeConnectionApi } from "../api/client";
+import { connections, removeConnections } from "../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/appStore";
 
@@ -32,6 +32,11 @@ const Connections = () => {
       </main>
     );
   }
+
+  const removeConnection = async (requestId: string) => {
+    await removeConnectionApi(requestId);
+    dispatch(removeConnections(requestId));
+  };
 
   return (
     <main className="mx-auto w-full max-w-2xl p-4 sm:p-6">
@@ -65,11 +70,11 @@ const Connections = () => {
             </div>
 
             <div className="ml-3 flex shrink-0 items-center gap-2">
-              <button className="min-w-20 rounded-lg bg-cyan-500/10 px-3 py-2 text-sm font-semibold text-cyan-400 transition hover:bg-cyan-500/15">
-                Accept
-              </button>
-              <button className="min-w-20 rounded-lg bg-rose-500/10 px-3 py-2 text-sm font-semibold text-rose-400 transition hover:bg-rose-500/15">
-                Decline
+              <button
+                onClick={() => removeConnection(user.connectionRequestId)}
+                className="min-w-20 rounded-lg bg-rose-500/10 px-3 py-2 text-sm font-semibold text-rose-400 transition hover:bg-rose-500/15"
+              >
+                Remove Connection
               </button>
             </div>
           </article>

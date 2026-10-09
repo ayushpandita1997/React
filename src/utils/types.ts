@@ -8,6 +8,7 @@ export type User = {
   age: number;
   gender: string;
   bio: string;
+  connectionRequestId: string;
 };
 
 export type ConnectionsResponse = {
