@@ -8,9 +8,7 @@ const UserCard = ({ user }: { user: User }) => {
     user;
   const dispatch = useDispatch();
 
-  const requestHandler = async (
-    status: "interested" | "ignore",
-  ) => {
+  const requestHandler = async (status: "ignore" | "interested") => {
     if (!_id) {
       console.error("Cannot send request: user ID is missing.");
       return;
@@ -37,14 +35,14 @@ const UserCard = ({ user }: { user: User }) => {
           <p>Skills: {skills.join(", ")}</p>
           <div className="card-actions justify-end">
             <button
-              onClick={() => requestHandler("interested")}
+              onClick={() => requestHandler("ignore")}
               disabled={!_id}
               className="btn btn-soft btn-info"
             >
               Ignore
             </button>
             <button
-              onClick={() => requestHandler("ignore")}
+              onClick={() => requestHandler("interested")}
               disabled={!_id}
               className="btn btn-soft btn-error"
             >
