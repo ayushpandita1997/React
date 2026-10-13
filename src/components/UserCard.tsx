@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { sendRequestsApi } from "../api/client";
 import type { User } from "../utils/types";
@@ -7,6 +8,8 @@ const UserCard = ({ user }: { user: User }) => {
   const { _id, firstName, lastName, age, gender, profilePic, skills, bio } =
     user;
   const dispatch = useDispatch();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const requestHandler = async (status: "ignore" | "interested") => {
     if (!_id) {
@@ -14,8 +17,18 @@ const UserCard = ({ user }: { user: User }) => {
       return;
     }
 
-    await sendRequestsApi(status, _id);
-    dispatch(removeUserFeed(_id));
+    setIsSubmitting(true);
+    setErrorMessage("");
+    try {
+      await sendRequestsApi(status, _id);
+      dispatch(removeUserFeed(_id));
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : "Failed to send request",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -33,17 +46,22 @@ const UserCard = ({ user }: { user: User }) => {
           </p>
           <p>{bio}</p>
           <p>Skills: {skills.join(", ")}</p>
+          {errorMessage && (
+            <p className="text-error text-sm" role="alert">
+              {errorMessage}
+            </p>
+          )}
           <div className="card-actions justify-end">
             <button
               onClick={() => requestHandler("ignore")}
-              disabled={!_id}
+              disabled={!_id || isSubmitting}
               className="btn btn-soft btn-info"
             >
               Ignore
             </button>
             <button
               onClick={() => requestHandler("interested")}
-              disabled={!_id}
+              disabled={!_id || isSubmitting}
               className="btn btn-soft btn-error"
             >
               Interested
