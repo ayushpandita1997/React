@@ -10,7 +10,7 @@ const Premium = () => {
 
     verifyOrderApi()
       .then((res) => {
-        if (isActive && res.data.isPremium) {
+        if (isActive && res.isPremium) {
           setIsPremium(true);
         }
       })
@@ -26,7 +26,7 @@ const Premium = () => {
   const verifyPaymentData = useCallback(async () => {
     try {
       const res = await verifyOrderApi();
-      if (res.data.isPremium) {
+      if (res.isPremium) {
         setIsPremium(true);
       }
     } catch (error) {
@@ -66,7 +66,7 @@ const Premium = () => {
   };
 
   return isPremium ? (
-    "You are already an premium member"
+    "You are already a premium member"
   ) : (
     <div className="relative min-h-screen overflow-hidden bg-[#071a29] text-white">
       <div className="relative flex min-h-screen flex-col">

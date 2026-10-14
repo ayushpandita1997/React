@@ -266,7 +266,7 @@ const createOrderApi = async (membershipType: string) => {
   return response.json();
 };
 
-const verifyOrderApi = async () => {
+const verifyOrderApi = async (): Promise<{ isPremium: boolean }> => {
   const response = await fetch(`${API_BASE_URL}/payment/verify`, {
     method: "GET",
     headers: {
