@@ -250,6 +250,37 @@ const removeSentRequestApi = async (requestId: string): Promise<void> => {
   }
 };
 
+const createOrderApi = async (membershipType: string) => {
+  const response = await fetch(`${API_BASE_URL}/payment/orders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ membershipType }),
+  });
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
+  }
+  return response.json();
+};
+
+const verifyOrderApi = async () => {
+  const response = await fetch(`${API_BASE_URL}/payment/verify`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
+  }
+  return response.json();
+};
+
 export {
   loginApi,
   signUpApi,
@@ -265,4 +296,6 @@ export {
   updatePasswordApi,
   removeConnectionApi,
   removeSentRequestApi,
+  createOrderApi,
+  verifyOrderApi,
 };

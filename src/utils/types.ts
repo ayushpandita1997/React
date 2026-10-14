@@ -36,3 +36,29 @@ export type SentRequest = {
 export type sentRequestsResponse = {
   data: SentRequest[];
 };
+
+export type RazorpayOptions = {
+  key: string;
+  amount: number | string;
+  currency: string;
+  name: string;
+  description: string;
+  order_id: string;
+  prefill?: {
+    name?: string;
+    email?: string;
+    contact?: string;
+  };
+  theme?: {
+    color?: string;
+  };
+  handler?: () => void;
+};
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: RazorpayOptions) => {
+      open: () => void;
+    };
+  }
+}

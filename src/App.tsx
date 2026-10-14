@@ -10,6 +10,7 @@ import Connections from "./components/Connections";
 import ReceivedRequests from "./components/ReceivedRequests";
 import SentRequests from "./components/SentRequests";
 import Password from "./components/Password";
+import Premium from "./components/Premium";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/received-requests" element={<ReceivedRequests />} />
             <Route path="/sent-requests" element={<SentRequests />} />
+            <Route path="/premium" element={<Premium />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -22,8 +22,9 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
-        <Link to="/feed" className="btn btn-ghost text-xl">
-          DevPair
+        <Link to="/feed" className="btn btn-ghost gap-2 text-xl">
+          <img src="/devpair-icon.svg" alt="" className="h-8 w-8" />
+          <span>DevPair</span>
         </Link>
       </div>
       {user && (
@@ -58,6 +59,11 @@ const NavBar = () => {
               <li>
                 <Link to="/sent-requests" className="justify-between">
                   Sent Requests
+                </Link>
+              </li>
+              <li>
+                <Link to="/premium" className="justify-between">
+                  Premium
                 </Link>
               </li>
               <li>
