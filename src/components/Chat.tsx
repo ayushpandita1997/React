@@ -2,21 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/appStore";
-import type { User } from "../utils/types";
+import type { ChatLocationState, ChatMessage } from "../utils/types";
 import createSocketConection from "../utils/socket";
-
-type ChatLocationState = {
-  user?: User;
-};
-
-type ChatMessage = {
-  senderId: string;
-  text: string;
-};
+import { getChatApi } from "../api/client";
 
 const Chat = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const [chatError, setChatError] = useState("");
   const socketRef = useRef<ReturnType<typeof createSocketConection> | null>(
     null,
   );
@@ -29,6 +22,41 @@ const Chat = () => {
     locationState?.user ??
     userConnection?.find((connection) => connection._id === targetUserId);
   const currentUserId = currentUser?._id;
+
+  useEffect(() => {
+    if (!targetUserId) {
+      return;
+    }
+
+    let isCurrentChat = true;
+    getChatApi(targetUserId)
+      .then((chatData) => {
+        if (!isCurrentChat) {
+          return;
+        }
+
+        setMessages(
+          chatData.messages.map((message) => ({
+            senderId: message.senderUserId,
+            text: message.message,
+          })),
+        );
+        setChatError("");
+      })
+      .catch((error: unknown) => {
+        if (!isCurrentChat) {
+          return;
+        }
+
+        setChatError(
+          error instanceof Error ? error.message : "Failed to load chat.",
+        );
+      });
+
+    return () => {
+      isCurrentChat = false;
+    };
+  }, [targetUserId]);
 
   useEffect(() => {
     if (!currentUserId || !targetUserId) {
@@ -81,6 +109,7 @@ const Chat = () => {
   return (
     <main className="mx-auto w-full max-w-4xl space-y-4 px-4 py-6 sm:px-6">
       <section className="space-y-2" aria-live="polite">
+        {chatError && <p role="alert">{chatError}</p>}
         {messages.map((chatMessage, index) => {
           const isSentByCurrentUser = chatMessage.senderId === currentUserId;
           const messageUser = isSentByCurrentUser ? currentUser : targetUser;

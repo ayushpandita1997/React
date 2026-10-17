@@ -37,6 +37,21 @@ export type sentRequestsResponse = {
   data: SentRequest[];
 };
 
+export type ChatApiMessage = {
+  _id: string;
+  message: string;
+  senderUserId: string;
+  receiverUserId: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ChatResponse = {
+  _id: string;
+  participants: string[];
+  messages: ChatApiMessage[];
+};
+
 export type RazorpayOptions = {
   key: string;
   amount: number | string;
@@ -62,3 +77,12 @@ declare global {
     };
   }
 }
+
+export type ChatLocationState = {
+  user?: User;
+};
+
+export type ChatMessage = {
+  senderId: string;
+  text: string;
+};

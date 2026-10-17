@@ -1,6 +1,7 @@
 import { API_BASE_URL } from "../utils/constants";
 import type {
   ConnectionsResponse,
+  ChatResponse,
   ReceivedRequestsResponse,
   User,
 } from "../utils/types";
@@ -281,6 +282,21 @@ const verifyOrderApi = async (): Promise<{ isPremium: boolean }> => {
   return response.json();
 };
 
+const getChatApi = async (targetUserId: string): Promise<ChatResponse> => {
+  const response = await fetch(`${API_BASE_URL}/chat/${targetUserId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message || response.statusText);
+  }
+  return response.json() as Promise<ChatResponse>;
+};
+
 export {
   loginApi,
   signUpApi,
@@ -298,4 +314,5 @@ export {
   removeSentRequestApi,
   createOrderApi,
   verifyOrderApi,
+  getChatApi,
 };
