@@ -85,4 +85,5 @@ export type ChatLocationState = {
 export type ChatMessage = {
   senderId: string;
   text: string;
+  createdAt: string;
 };

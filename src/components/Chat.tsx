@@ -39,6 +39,7 @@ const Chat = () => {
           chatData.messages.map((message) => ({
             senderId: message.senderUserId,
             text: message.message,
+            createdAt: message.createdAt,
           })),
         );
         setChatError("");
@@ -131,7 +132,15 @@ const Chat = () => {
                   </div>
                 </div>
               )}
-              <div className="chat-header">{messageName}</div>
+              <div className="chat-header">
+                {messageName}
+                <time dateTime={chatMessage.createdAt}>
+                  {new Date(chatMessage.createdAt).toLocaleTimeString([], {
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })}
+                </time>
+              </div>
               <div className="chat-bubble">{chatMessage.text}</div>
             </div>
           );
