@@ -3,6 +3,7 @@ import { connectionsApi, removeConnectionApi } from "../api/client";
 import { connections, removeConnections } from "../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/appStore";
+import { Link } from "react-router";
 
 const Connections = () => {
   const dispatch = useDispatch();
@@ -72,10 +73,17 @@ const Connections = () => {
             <div className="ml-3 flex shrink-0 items-center gap-2">
               <button
                 onClick={() => removeConnection(user.connectionRequestId)}
-                className="min-w-20 rounded-lg bg-rose-500/10 px-3 py-2 text-sm font-semibold text-rose-400 transition hover:bg-rose-500/15"
+                className="inline-flex h-12 min-w-20 items-center justify-center rounded-lg bg-rose-500/10 px-3 py-2 text-sm font-semibold text-rose-400 transition hover:bg-rose-500/15"
               >
                 Remove Connection
               </button>
+              <Link
+                className="inline-flex h-12 min-w-20 items-center justify-center rounded-lg bg-green-500/10 px-3 py-2 text-sm font-semibold text-green-400 transition hover:bg-green-500/15"
+                to={`/chat/${user._id}`}
+                state={{ user }}
+              >
+                Chat
+              </Link>
             </div>
           </article>
         ))}

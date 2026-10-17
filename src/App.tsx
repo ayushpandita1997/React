@@ -11,6 +11,7 @@ import ReceivedRequests from "./components/ReceivedRequests";
 import SentRequests from "./components/SentRequests";
 import Password from "./components/Password";
 import Premium from "./components/Premium";
+import Chat from "./components/Chat";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/received-requests" element={<ReceivedRequests />} />
             <Route path="/sent-requests" element={<SentRequests />} />
             <Route path="/premium" element={<Premium />} />
+            <Route path="/chat/:targetUserId" element={<Chat />} />
           </Route>
         </Routes>
       </BrowserRouter>
