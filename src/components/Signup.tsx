@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { signUpApi } from "../api/client";
-import { useDispatch } from "react-redux";
-import { addUser } from "../store/userSlice";
 import { useNavigate } from "react-router";
 
 const isValidImageUrl = async (value: string) => {
@@ -46,7 +44,6 @@ const Signup = () => {
   const [profilePic, setProfilePic] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [showSuccessToast, setShowSuccessToast] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -86,7 +83,7 @@ const Signup = () => {
         return;
       }
 
-      const data = await signUpApi(
+      await signUpApi(
         firstName,
         lastName,
         email,
@@ -97,7 +94,6 @@ const Signup = () => {
         skills,
         normalizedProfilePic || undefined,
       );
-      dispatch(addUser(data));
       setShowSuccessToast(true);
       setTimeout(() => {
         navigate("/login", { replace: true });
