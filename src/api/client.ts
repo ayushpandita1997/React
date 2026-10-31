@@ -31,7 +31,7 @@ const signUpApi = async (
   gender: string,
   bio: string,
   skills: string,
-  profilePic: string,
+  profilePic: string | undefined,
 ) => {
   try {
     const data = await fetch(`${API_BASE_URL}/signup`, {

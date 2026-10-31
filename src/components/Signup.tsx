@@ -4,6 +4,36 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../store/userSlice";
 import { useNavigate } from "react-router";
 
+const isValidImageUrl = async (value: string) => {
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    return false;
+  }
+
+  if (url.protocol !== "http:" && url.protocol !== "https:") return false;
+
+  const image = new Image();
+  return new Promise<boolean>((resolve) => {
+    const timeoutId = window.setTimeout(() => {
+      image.onload = null;
+      image.onerror = null;
+      resolve(false);
+    }, 10000);
+    const finish = (isValid: boolean) => {
+      window.clearTimeout(timeoutId);
+      image.onload = null;
+      image.onerror = null;
+      resolve(isValid);
+    };
+
+    image.onload = () => finish(true);
+    image.onerror = () => finish(false);
+    image.src = url.href;
+  });
+};
+
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -27,6 +57,8 @@ const Signup = () => {
   }, [showSuccessToast]);
 
   const signUpHandler = async () => {
+    const normalizedProfilePic = profilePic.trim();
+
     if (
       !firstName ||
       !lastName ||
@@ -35,8 +67,7 @@ const Signup = () => {
       !age ||
       !gender ||
       !bio ||
-      !skills ||
-      !profilePic
+      !skills
     ) {
       setErrorMessage("Please fill in all fields");
       setShowSuccessToast(false);
@@ -47,6 +78,14 @@ const Signup = () => {
     setShowSuccessToast(false);
 
     try {
+      if (
+        normalizedProfilePic &&
+        !(await isValidImageUrl(normalizedProfilePic))
+      ) {
+        setErrorMessage("Please upload a valid image URL");
+        return;
+      }
+
       const data = await signUpApi(
         firstName,
         lastName,
@@ -56,7 +95,7 @@ const Signup = () => {
         gender,
         bio,
         skills,
-        profilePic,
+        normalizedProfilePic || undefined,
       );
       dispatch(addUser(data));
       setShowSuccessToast(true);
@@ -75,7 +114,12 @@ const Signup = () => {
 
         <div className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
           <div>
-            <label className="label">First Name</label>
+            <label className="label">
+              First Name{" "}
+              <span className="text-red-500" aria-hidden="true">
+                *
+              </span>
+            </label>
             <input
               type="text"
               className="input w-full"
@@ -86,7 +130,12 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="label">Last Name</label>
+            <label className="label">
+              Last Name{" "}
+              <span className="text-red-500" aria-hidden="true">
+                *
+              </span>
+            </label>
             <input
               type="text"
               className="input w-full"
@@ -97,7 +146,12 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="label">Email</label>
+            <label className="label">
+              Email{" "}
+              <span className="text-red-500" aria-hidden="true">
+                *
+              </span>
+            </label>
             <input
               type="email"
               className="input w-full"
@@ -108,7 +162,12 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="label">Password</label>
+            <label className="label">
+              Password{" "}
+              <span className="text-red-500" aria-hidden="true">
+                *
+              </span>
+            </label>
             <input
               type="password"
               className="input w-full"
@@ -119,7 +178,12 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="label">Age</label>
+            <label className="label">
+              Age{" "}
+              <span className="text-red-500" aria-hidden="true">
+                *
+              </span>
+            </label>
             <input
               type="text"
               className="input w-full"
@@ -130,7 +194,12 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="label">Gender</label>
+            <label className="label">
+              Gender{" "}
+              <span className="text-red-500" aria-hidden="true">
+                *
+              </span>
+            </label>
             <select
               defaultValue=""
               required
@@ -150,7 +219,12 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="label">Bio</label>
+            <label className="label">
+              Bio{" "}
+              <span className="text-red-500" aria-hidden="true">
+                *
+              </span>
+            </label>
             <input
               type="text"
               className="input w-full"
@@ -161,7 +235,7 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="label">Profile Picture</label>
+            <label className="label">Profile Picture (Optional)</label>
             <input
               type="text"
               className="input w-full"
@@ -172,7 +246,12 @@ const Signup = () => {
           </div>
 
           <div>
-            <label className="label">Skills</label>
+            <label className="label">
+              Skills{" "}
+              <span className="text-red-500" aria-hidden="true">
+                *
+              </span>
+            </label>
             <input
               type="text"
               className="input w-full"
